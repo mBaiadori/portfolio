@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>ValidationFiel</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <input
+        class="passwordField"
+        id="password"
+        type="password"
+        placeholder="Safe Password"
+        required
+        oninput="validation()"
+      />
+      <div class="validators">
+        <div>
+          <span id="special" class="special">@</span>
+          <small id="specialText">especial</small>
+        </div>
+        <div>
+          <span id="uppercase" class="uppercase">U</span>
+          <small id="uppercaseText">uppercase</small>
+        </div>
+        <div>
+          <span id="number" class="number">Nº</span>
+          <small id="numberText">number</small>
+        </div>
+        <div>
+          <span id="minimum" class="minimum">10</span>
+          <small id="minimumText">minimum</small>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const password = document.getElementById('password');
+      const special = document.getElementById('special');
+      const specialText = document.getElementById('specialText');
+      const uppercase = document.getElementById('uppercase');
+      const uppercaseText = document.getElementById('uppercaseText');
+      const number = document.getElementById('number');
+      const numberText = document.getElementById('numberText');
+      const minimum = document.getElementById('minimum');
+      const minimumText = document.getElementById('minimumText');
+      const minimumValue = minimum.innerHTML;
+
+      function validation() {
+        minimum.innerHTML = minimumValue - password.value.length;
+        if (minimumValue - password.value.length <= 0) {
+          minimum.innerHTML = 0;
+          minimum.style.color = 'green';
+          minimumText.style.color = 'green';
+        } else {
+          minimum.style.color = 'red';
+          minimumText.style.color = 'red';
+        }
+
+        const regexUppercase = /[A-Z]+/g;
+        if (regexUppercase.test(password.value) === true) {
+          uppercase.style.color = 'green';
+          uppercaseText.style.color = 'green';
+        } else {
+          uppercase.style.color = 'red';
+          uppercaseText.style.color = 'red';
+        }
+
+        const regexNumber = /[0-9]+/g;
+        if (regexNumber.test(password.value) === true) {
+          number.style.color = 'green';
+          numberText.style.color = 'green';
+        } else {
+          number.style.color = 'red';
+          numberText.style.color = 'red';
+        }
+
+        const regexSpecial = /[^\w\s*]+/g;
+        if (regexSpecial.test(password.value) === true) {
+          special.style.color = 'green';
+          specialText.style.color = 'green';
+        } else {
+          special.style.color = 'red';
+          specialText.style.color = 'red';
+        }
+        if (
+          minimumValue - password.value.length <= 0 &&
+          /((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g.test(
+            password.value
+          )
+        ) {
+          password.style.borderColor = 'green';      
+        } else {
+          password.style.borderColor = 'red';
+}
+      }
+    </script>
+  </body>
+</html>
